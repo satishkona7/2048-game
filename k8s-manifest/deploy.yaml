@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind : deployment
+metadata :
+  name: deployment
+  labels:
+    app : nginx-app
+spec :
+  replicas : 1
+  matchLabels:
+    app: nginx-app
+  template:
+    metadata:
+      name: nginx-pod
+      labels:
+        app: nginx-app
+    spec:
+      containers:
+        name: container-nginx
+        image: satishkona/multi:latest
+        ports:
+          - containerPort: 80
+            

@@ -27,9 +27,36 @@ stages:
         repository: 'satishkona/multi'
         command: 'build'
         Dockerfile: '**/Dockerfile'
-        tags: '$(tag)'
+        tags: |
+          $(tag)
+          latest
     - task: Docker@2
+      displayName: push image to docker hub
       inputs:
         containerRegistry: 'doc'
         repository: 'satishkona/multi'
         command: 'push'
+        tags: |
+          $(Build.BuildId)
+          latest
+    - task: CopyFiles@2
+      displayName: copy files
+      inputs:
+        SourceFolder: 'k8s-manifest'
+        Contents: '**'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+
+- stage: artifact
+  displayName: artifact
+  jobs:
+  - job: artifact
+    displayName: artifact
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - task: PublishBuildArtifacts@1
+        displayName: publish artifact
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'

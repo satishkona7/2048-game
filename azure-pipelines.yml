@@ -33,7 +33,7 @@ stages:
       displayName: push an image
       inputs:
         containerRegistry: 'docker'
-        repository: 'satishkona/multi'
+        repository: 'multi'
         command: 'push'
         tags: |
           $(tag)

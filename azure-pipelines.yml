@@ -46,17 +46,9 @@ stages:
         Contents: '**'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
-- stage: artifact
-  displayName: artifact
-  jobs:
-  - job: artifact
-    displayName: artifact
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-      - task: PublishBuildArtifacts@1
-        displayName: publish artifact
-        inputs:
-          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
+    - task: PublishBuildArtifacts@1
+      displayName: publish artifact
+      inputs:
+       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+       ArtifactName: 'drop'
+       publishLocation: 'Container'
